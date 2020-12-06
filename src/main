@@ -1,0 +1,3708 @@
+input ComicUpdateManyInlineInput {
+  """
+  Create and connect multiple Comic documents
+  """
+  create: [ComicCreateInput!]
+  """
+  Connect multiple existing Comic documents
+  """
+  connect: [ComicConnectInput!]
+  """
+  Override currently-connected documents with multiple existing Comic documents
+  """
+  set: [ComicWhereUniqueInput!]
+  """
+  Update multiple Comic documents
+  """
+  update: [ComicUpdateWithNestedWhereUniqueInput!]
+  """
+  Upsert multiple Comic documents
+  """
+  upsert: [ComicUpsertWithNestedWhereUniqueInput!]
+  """
+  Disconnect multiple Comic documents
+  """
+  disconnect: [ComicWhereUniqueInput!]
+  """
+  Delete multiple Comic documents
+  """
+  delete: [ComicWhereUniqueInput!]
+}
+
+enum _FilterKind {
+  search
+  AND
+  OR
+  NOT
+  eq
+  eq_not
+  in
+  not_in
+  lt
+  lte
+  gt
+  gte
+  contains
+  not_contains
+  starts_with
+  not_starts_with
+  ends_with
+  not_ends_with
+  contains_all
+  contains_some
+  contains_none
+  relational_single
+  relational_every
+  relational_some
+  relational_none
+}
+
+"""
+Raw JSON value
+"""
+scalar Json
+
+input CharacterUpsertInput {
+  """
+  Create document if it didn't exist
+  """
+  create: CharacterCreateInput!
+  """
+  Update document if it exists
+  """
+  update: CharacterUpdateInput!
+}
+
+"""
+References Comic record uniquely
+"""
+input ComicWhereUniqueInput {
+  id: ID
+}
+
+enum _RelationKind {
+  regular
+  union
+}
+
+input DocumentOutputInput {
+  """
+  Transforms a document into a desired file type.
+See this matrix for format support:
+
+PDF:	jpg, odp, ods, odt, png, svg, txt, and webp
+DOC:	docx, html, jpg, odt, pdf, png, svg, txt, and webp
+DOCX:	doc, html, jpg, odt, pdf, png, svg, txt, and webp
+ODT:	doc, docx, html, jpg, pdf, png, svg, txt, and webp
+XLS:	jpg, pdf, ods, png, svg, xlsx, and webp
+XLSX:	jpg, pdf, ods, png, svg, xls, and webp
+ODS:	jpg, pdf, png, xls, svg, xlsx, and webp
+PPT:	jpg, odp, pdf, png, svg, pptx, and webp
+PPTX:	jpg, odp, pdf, png, svg, ppt, and webp
+ODP:	jpg, pdf, png, ppt, svg, pptx, and webp
+BMP:	jpg, odp, ods, odt, pdf, png, svg, and webp
+GIF:	jpg, odp, ods, odt, pdf, png, svg, and webp
+JPG:	jpg, odp, ods, odt, pdf, png, svg, and webp
+PNG:	jpg, odp, ods, odt, pdf, png, svg, and webp
+WEBP:	jpg, odp, ods, odt, pdf, png, svg, and webp
+TIFF:	jpg, odp, ods, odt, pdf, png, svg, and webp
+AI:	    jpg, odp, ods, odt, pdf, png, svg, and webp
+PSD:	jpg, odp, ods, odt, pdf, png, svg, and webp
+SVG:	jpg, odp, ods, odt, pdf, png, and webp
+HTML:	jpg, odt, pdf, svg, txt, and webp
+TXT:	jpg, html, odt, pdf, svg, and webp
+  """
+  format: DocumentFileTypes
+}
+
+input AssetUpdateManyLocalizationDataInput {
+  fileName: String
+  height: Float
+  width: Float
+  size: Float
+  mimeType: String
+}
+
+input CharacterUpdateOneInlineInput {
+  """
+  Create and connect one Character document
+  """
+  create: CharacterCreateInput
+  """
+  Update single Character document
+  """
+  update: CharacterUpdateWithNestedWhereUniqueInput
+  """
+  Upsert single Character document
+  """
+  upsert: CharacterUpsertWithNestedWhereUniqueInput
+  """
+  Connect existing Character document
+  """
+  connect: CharacterWhereUniqueInput
+  """
+  Disconnect currently connected Character document
+  """
+  disconnect: Boolean
+  """
+  Delete currently connected Character document
+  """
+  delete: Boolean
+}
+
+input AssetCreateOneInlineInput {
+  """
+  Create and connect one Asset document
+  """
+  create: AssetCreateInput
+  """
+  Connect one existing Asset document
+  """
+  connect: AssetWhereUniqueInput
+}
+
+enum _SystemDateTimeFieldVariation {
+  base
+  localization
+  combined
+}
+
+"""
+A connection to a list of items.
+"""
+type AssetConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [AssetEdge!]!
+  aggregate: Aggregate!
+}
+
+"""
+References Asset record uniquely
+"""
+input AssetWhereUniqueInput {
+  id: ID
+}
+
+"""
+Representing a color value comprising of HEX, RGBA and css color values
+"""
+type Color {
+  hex: Hex!
+  rgba: RGBA!
+  css: String!
+}
+
+input AssetUpdateWithNestedWhereUniqueInput {
+  """
+  Unique document search
+  """
+  where: AssetWhereUniqueInput!
+  """
+  Document to update
+  """
+  data: AssetUpdateInput!
+}
+
+type Comic implements Node {
+  """
+  System stage field
+  """
+  stage: Stage!
+  """
+  Get the document in other stages
+  """
+  documentInStages("""Potential stages that should be returned""" stages: [Stage!]! = """[DRAFT,PUBLISHED]""", """Decides if the current stage should be included or not""" includeCurrent: Boolean! = """false""", """Decides if the documents should match the parent documents locale or should use the fallback order defined in the tree""" inheritLocale: Boolean! = """false"""): [Comic!]!
+  """
+  The unique identifier
+  """
+  id: ID!
+  """
+  The time the document was created
+  """
+  createdAt: DateTime!
+  """
+  The time the document was updated
+  """
+  updatedAt: DateTime!
+  """
+  The time the document was published. Null on documents in draft stage.
+  """
+  publishedAt: DateTime
+  title: String!
+  characters(where: CharacterWhereInput, orderBy: CharacterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, """Allows to optionally override locale filtering behaviour in the query's subtree.
+
+Note that `characters` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument will overwrite any existing locale filtering defined in the query's tree for the subtree.""" locales: [Locale!]): [Character!]!
+  cover("""Allows to optionally override locale filtering behaviour in the query's subtree.
+
+Note that `cover` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument will overwrite any existing locale filtering defined in the query's tree for the subtree.""" locales: [Locale!]): Asset
+  """
+  List of Comic versions
+  """
+  history(limit: Int! = """10""", skip: Int! = """0""", """This is optional and can be used to fetch the document version history for a specific stage instead of the current one""" stageOverride: Stage): [Version!]!
+}
+
+"""
+An edge in a connection.
+"""
+type CharacterEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Character!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum KategoriaOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  publishedAt_ASC
+  publishedAt_DESC
+  kategoria_ASC
+  kategoria_DESC
+}
+
+input KategoriaUpdateManyWithNestedWhereInput {
+  """
+  Document search
+  """
+  where: KategoriaWhereInput!
+  """
+  Update many input
+  """
+  data: KategoriaUpdateManyInput!
+}
+
+"""
+Representing a geolocation point with latitude and longitude
+"""
+type Location {
+  latitude: Float!
+  longitude: Float!
+  distance(from: LocationInput!): Float!
+}
+
+input ImageResizeInput {
+  """
+  The width in pixels to resize the image to. The value must be an integer from 1 to 10000.
+  """
+  width: Int
+  """
+  The height in pixels to resize the image to. The value must be an integer from 1 to 10000.
+  """
+  height: Int
+  """
+  The default value for the fit parameter is fit:clip.
+  """
+  fit: ImageFit
+}
+
+"""
+Model for a superhero, supervilan and the rest
+"""
+type Character implements Node {
+  """
+  System stage field
+  """
+  stage: Stage!
+  """
+  Get the document in other stages
+  """
+  documentInStages("""Potential stages that should be returned""" stages: [Stage!]! = """[DRAFT,PUBLISHED]""", """Decides if the current stage should be included or not""" includeCurrent: Boolean! = """false""", """Decides if the documents should match the parent documents locale or should use the fallback order defined in the tree""" inheritLocale: Boolean! = """false"""): [Character!]!
+  """
+  The unique identifier
+  """
+  id: ID!
+  """
+  The time the document was created
+  """
+  createdAt: DateTime!
+  """
+  The time the document was updated
+  """
+  updatedAt: DateTime!
+  """
+  The time the document was published. Null on documents in draft stage.
+  """
+  publishedAt: DateTime
+  """
+  Character's name
+  """
+  name: String!
+  """
+  Small cover for a character, preferably avatar
+  """
+  cover("""Allows to optionally override locale filtering behaviour in the query's subtree.
+
+Note that `cover` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument will overwrite any existing locale filtering defined in the query's tree for the subtree.""" locales: [Locale!]): Asset!
+  description: String!
+  kategoria("""Allows to optionally override locale filtering behaviour in the query's subtree.
+
+Note that `kategoria` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument will overwrite any existing locale filtering defined in the query's tree for the subtree.""" locales: [Locale!]): Kategoria
+  comics(where: ComicWhereInput, orderBy: ComicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, """Allows to optionally override locale filtering behaviour in the query's subtree.
+
+Note that `comics` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument will overwrite any existing locale filtering defined in the query's tree for the subtree.""" locales: [Locale!]): [Comic!]!
+  images(where: AssetWhereInput, orderBy: AssetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, """Allows to optionally override locale filtering behaviour in the query's subtree.
+
+Note that `images` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument will overwrite any existing locale filtering defined in the query's tree for the subtree.""" locales: [Locale!]): [Asset!]!
+  """
+  List of Character versions
+  """
+  history(limit: Int! = """10""", skip: Int! = """0""", """This is optional and can be used to fetch the document version history for a specific stage instead of the current one""" stageOverride: Stage): [Version!]!
+}
+
+input AssetUpsertLocalizationInput {
+  update: AssetUpdateLocalizationDataInput!
+  create: AssetCreateLocalizationDataInput!
+  locale: Locale!
+}
+
+type Kategoria implements Node {
+  """
+  System stage field
+  """
+  stage: Stage!
+  """
+  Get the document in other stages
+  """
+  documentInStages("""Potential stages that should be returned""" stages: [Stage!]! = """[DRAFT,PUBLISHED]""", """Decides if the current stage should be included or not""" includeCurrent: Boolean! = """false""", """Decides if the documents should match the parent documents locale or should use the fallback order defined in the tree""" inheritLocale: Boolean! = """false"""): [Kategoria!]!
+  """
+  The unique identifier
+  """
+  id: ID!
+  """
+  The time the document was created
+  """
+  createdAt: DateTime!
+  """
+  The time the document was updated
+  """
+  updatedAt: DateTime!
+  """
+  The time the document was published. Null on documents in draft stage.
+  """
+  publishedAt: DateTime
+  """
+  The way character behaves in comics
+  """
+  kategoria: String!
+  """
+  Color for a category
+  """
+  color: Color!
+  characters(where: CharacterWhereInput, orderBy: CharacterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, """Allows to optionally override locale filtering behaviour in the query's subtree.
+
+Note that `characters` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument will overwrite any existing locale filtering defined in the query's tree for the subtree.""" locales: [Locale!]): [Character!]!
+  """
+  List of Kategoria versions
+  """
+  history(limit: Int! = """10""", skip: Int! = """0""", """This is optional and can be used to fetch the document version history for a specific stage instead of the current one""" stageOverride: Stage): [Version!]!
+}
+
+"""
+Transformations for Assets
+"""
+input AssetTransformationInput {
+  image: ImageTransformationInput
+  document: DocumentTransformationInput
+  """
+  Pass true if you want to validate the passed transformation parameters
+  """
+  validateOptions: Boolean = """false"""
+}
+
+input ComicUpdateInput {
+  title: String
+  characters: CharacterUpdateManyInlineInput
+  cover: AssetUpdateOneInlineInput
+}
+
+input KategoriaUpsertWithNestedWhereUniqueInput {
+  """
+  Unique document search
+  """
+  where: KategoriaWhereUniqueInput!
+  """
+  Upsert data
+  """
+  data: KategoriaUpsertInput!
+}
+
+"""
+An object with an ID
+"""
+interface Node {
+  """
+  The id of the object.
+  """
+  id: ID!
+  """
+  The Stage of an object
+  """
+  stage: Stage!
+}
+
+input VersionWhereInput {
+  id: ID!
+  stage: Stage!
+  revision: Int!
+}
+
+enum ComicOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  publishedAt_ASC
+  publishedAt_DESC
+  title_ASC
+  title_DESC
+}
+
+input KategoriaCreateOneInlineInput {
+  """
+  Create and connect one Kategoria document
+  """
+  create: KategoriaCreateInput
+  """
+  Connect one existing Kategoria document
+  """
+  connect: KategoriaWhereUniqueInput
+}
+
+input AssetUpdateInput {
+  handle: String
+  fileName: String
+  height: Float
+  width: Float
+  size: Float
+  mimeType: String
+  characterCover: CharacterUpdateManyInlineInput
+  characterImages: CharacterUpdateManyInlineInput
+  comicCover: ComicUpdateManyInlineInput
+  """
+  Manage document localizations
+  """
+  localizations: AssetUpdateLocalizationsInput
+}
+
+input AssetCreateManyInlineInput {
+  """
+  Create and connect multiple existing Asset documents
+  """
+  create: [AssetCreateInput!]
+  """
+  Connect multiple existing Asset documents
+  """
+  connect: [AssetWhereUniqueInput!]
+}
+
+input CharacterCreateInput {
+  createdAt: DateTime
+  updatedAt: DateTime
+  name: String!
+  cover: AssetCreateOneInlineInput!
+  description: String!
+  kategoria: KategoriaCreateOneInlineInput
+  comics: ComicCreateManyInlineInput
+  images: AssetCreateManyInlineInput!
+}
+
+enum ImageFit {
+  """
+  Resizes the image to fit within the specified parameters without distorting, cropping, or changing the aspect ratio.
+  """
+  clip
+  """
+  Resizes the image to fit the specified parameters exactly by removing any parts of the image that don't fit within the boundaries.
+  """
+  crop
+  """
+  Resizes the image to fit the specified parameters exactly by scaling the image to the desired size. The aspect ratio of the image is not respected and the image can be distorted using this method.
+  """
+  scale
+  """
+  Resizes the image to fit within the parameters, but as opposed to 'fit:clip' will not scale the image if the image is smaller than the output size.
+  """
+  max
+}
+
+input AssetCreateInput {
+  createdAt: DateTime
+  updatedAt: DateTime
+  handle: String!
+  fileName: String!
+  height: Float
+  width: Float
+  size: Float
+  mimeType: String
+  characterCover: CharacterCreateManyInlineInput
+  characterImages: CharacterCreateManyInlineInput
+  comicCover: ComicCreateManyInlineInput
+  """
+  Inline mutations for managing document localizations excluding the default locale
+  """
+  localizations: AssetCreateLocalizationsInput
+}
+
+type DocumentVersion {
+  id: ID!
+  stage: Stage!
+  revision: Int!
+  createdAt: DateTime!
+  data: Json
+}
+
+input AssetCreateLocalizationInput {
+  """
+  Localization input
+  """
+  data: AssetCreateLocalizationDataInput!
+  locale: Locale!
+}
+
+input AssetUpdateManyInput {
+  fileName: String
+  height: Float
+  width: Float
+  size: Float
+  mimeType: String
+  """
+  Optional updates to localizations
+  """
+  localizations: AssetUpdateManyLocalizationsInput
+}
+
+"""
+Transformations for Documents
+"""
+input DocumentTransformationInput {
+  """
+  Changes the output for the file.
+  """
+  output: DocumentOutputInput
+}
+
+"""
+Identifies documents
+"""
+input AssetManyWhereInput {
+  """
+  Contains search across all appropriate fields.
+  """
+  _search: String
+  """
+  Logical AND on all given filters.
+  """
+  AND: [AssetWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [AssetWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [AssetWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  publishedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  publishedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  publishedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  publishedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  publishedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  publishedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  publishedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  publishedAt_gte: DateTime
+  characterCover_every: CharacterWhereInput
+  characterCover_some: CharacterWhereInput
+  characterCover_none: CharacterWhereInput
+  characterImages_every: CharacterWhereInput
+  characterImages_some: CharacterWhereInput
+  characterImages_none: CharacterWhereInput
+  comicCover_every: ComicWhereInput
+  comicCover_some: ComicWhereInput
+  comicCover_none: ComicWhereInput
+}
+
+input CharacterUpdateManyInlineInput {
+  """
+  Create and connect multiple Character documents
+  """
+  create: [CharacterCreateInput!]
+  """
+  Connect multiple existing Character documents
+  """
+  connect: [CharacterConnectInput!]
+  """
+  Override currently-connected documents with multiple existing Character documents
+  """
+  set: [CharacterWhereUniqueInput!]
+  """
+  Update multiple Character documents
+  """
+  update: [CharacterUpdateWithNestedWhereUniqueInput!]
+  """
+  Upsert multiple Character documents
+  """
+  upsert: [CharacterUpsertWithNestedWhereUniqueInput!]
+  """
+  Disconnect multiple Character documents
+  """
+  disconnect: [CharacterWhereUniqueInput!]
+  """
+  Delete multiple Character documents
+  """
+  delete: [CharacterWhereUniqueInput!]
+}
+
+input ComicCreateOneInlineInput {
+  """
+  Create and connect one Comic document
+  """
+  create: ComicCreateInput
+  """
+  Connect one existing Comic document
+  """
+  connect: ComicWhereUniqueInput
+}
+
+"""
+Representing a RGBA color value: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()_and_rgba()
+"""
+type RGBA {
+  r: RGBAHue!
+  g: RGBAHue!
+  b: RGBAHue!
+  a: RGBATransparency!
+}
+
+input PublishLocaleInput {
+  """
+  Locales to publish
+  """
+  locale: Locale!
+  """
+  Stages to publish selected locales to
+  """
+  stages: [Stage!]!
+}
+
+input UnpublishLocaleInput {
+  """
+  Locales to unpublish
+  """
+  locale: Locale!
+  """
+  Stages to unpublish selected locales from
+  """
+  stages: [Stage!]!
+}
+
+enum SystemDateTimeFieldVariation {
+  BASE
+  LOCALIZATION
+  COMBINED
+}
+
+input KategoriaConnectInput {
+  """
+  Document to connect
+  """
+  where: KategoriaWhereUniqueInput!
+  """
+  Allow to specify document position in list of connected documents, will default to appending at end of list
+  """
+  position: ConnectPositionInput
+}
+
+enum _MutationInputFieldKind {
+  scalar
+  richText
+  enum
+  relation
+  union
+  virtual
+}
+
+input AssetCreateLocalizationsInput {
+  """
+  Create localizations for the newly-created document
+  """
+  create: [AssetCreateLocalizationInput!]
+}
+
+input AssetUpsertInput {
+  """
+  Create document if it didn't exist
+  """
+  create: AssetCreateInput!
+  """
+  Update document if it exists
+  """
+  update: AssetUpdateInput!
+}
+
+"""
+Slate-compatible RichText AST
+"""
+scalar RichTextAST
+
+input AssetUpdateManyInlineInput {
+  """
+  Create and connect multiple Asset documents
+  """
+  create: [AssetCreateInput!]
+  """
+  Connect multiple existing Asset documents
+  """
+  connect: [AssetConnectInput!]
+  """
+  Override currently-connected documents with multiple existing Asset documents
+  """
+  set: [AssetWhereUniqueInput!]
+  """
+  Update multiple Asset documents
+  """
+  update: [AssetUpdateWithNestedWhereUniqueInput!]
+  """
+  Upsert multiple Asset documents
+  """
+  upsert: [AssetUpsertWithNestedWhereUniqueInput!]
+  """
+  Disconnect multiple Asset documents
+  """
+  disconnect: [AssetWhereUniqueInput!]
+  """
+  Delete multiple Asset documents
+  """
+  delete: [AssetWhereUniqueInput!]
+}
+
+"""
+A connection to a list of items.
+"""
+type ComicConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [ComicEdge!]!
+  aggregate: Aggregate!
+}
+
+"""
+Identifies documents
+"""
+input KategoriaWhereInput {
+  """
+  Contains search across all appropriate fields.
+  """
+  _search: String
+  """
+  Logical AND on all given filters.
+  """
+  AND: [KategoriaWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [KategoriaWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [KategoriaWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  publishedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  publishedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  publishedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  publishedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  publishedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  publishedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  publishedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  publishedAt_gte: DateTime
+  kategoria: String
+  """
+  All values that are not equal to given value.
+  """
+  kategoria_not: String
+  """
+  All values that are contained in given list.
+  """
+  kategoria_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  kategoria_not_in: [String!]
+  """
+  All values containing the given string.
+  """
+  kategoria_contains: String
+  """
+  All values not containing the given string.
+  """
+  kategoria_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  kategoria_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  kategoria_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  kategoria_ends_with: String
+  """
+  All values not ending with the given string
+  """
+  kategoria_not_ends_with: String
+  characters_every: CharacterWhereInput
+  characters_some: CharacterWhereInput
+  characters_none: CharacterWhereInput
+}
+
+input KategoriaUpdateInput {
+  kategoria: String
+  color: ColorInput
+  characters: CharacterUpdateManyInlineInput
+}
+
+enum CharacterOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  publishedAt_ASC
+  publishedAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+}
+
+"""
+Identifies documents
+"""
+input KategoriaManyWhereInput {
+  """
+  Contains search across all appropriate fields.
+  """
+  _search: String
+  """
+  Logical AND on all given filters.
+  """
+  AND: [KategoriaWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [KategoriaWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [KategoriaWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  publishedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  publishedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  publishedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  publishedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  publishedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  publishedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  publishedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  publishedAt_gte: DateTime
+  kategoria: String
+  """
+  All values that are not equal to given value.
+  """
+  kategoria_not: String
+  """
+  All values that are contained in given list.
+  """
+  kategoria_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  kategoria_not_in: [String!]
+  """
+  All values containing the given string.
+  """
+  kategoria_contains: String
+  """
+  All values not containing the given string.
+  """
+  kategoria_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  kategoria_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  kategoria_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  kategoria_ends_with: String
+  """
+  All values not ending with the given string
+  """
+  kategoria_not_ends_with: String
+  characters_every: CharacterWhereInput
+  characters_some: CharacterWhereInput
+  characters_none: CharacterWhereInput
+}
+
+type BatchPayload {
+  """
+  The number of nodes that have been affected by the Batch operation.
+  """
+  count: Long!
+}
+
+type Aggregate {
+  count: Int!
+}
+
+input ConnectPositionInput {
+  """
+  Connect document after specified document
+  """
+  after: ID
+  """
+  Connect document before specified document
+  """
+  before: ID
+  """
+  Connect document at first position
+  """
+  start: Boolean
+  """
+  Connect document at last position
+  """
+  end: Boolean
+}
+
+input AssetUpdateManyLocalizationInput {
+  data: AssetUpdateManyLocalizationDataInput!
+  locale: Locale!
+}
+
+"""
+Input type representing a RGBA color value: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()_and_rgba()
+"""
+input RGBAInput {
+  r: RGBAHue!
+  g: RGBAHue!
+  b: RGBAHue!
+  a: RGBATransparency!
+}
+
+"""
+Identifies documents
+"""
+input AssetWhereInput {
+  """
+  Contains search across all appropriate fields.
+  """
+  _search: String
+  """
+  Logical AND on all given filters.
+  """
+  AND: [AssetWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [AssetWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [AssetWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  publishedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  publishedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  publishedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  publishedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  publishedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  publishedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  publishedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  publishedAt_gte: DateTime
+  handle: String
+  """
+  All values that are not equal to given value.
+  """
+  handle_not: String
+  """
+  All values that are contained in given list.
+  """
+  handle_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  handle_not_in: [String!]
+  """
+  All values containing the given string.
+  """
+  handle_contains: String
+  """
+  All values not containing the given string.
+  """
+  handle_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  handle_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  handle_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  handle_ends_with: String
+  """
+  All values not ending with the given string
+  """
+  handle_not_ends_with: String
+  fileName: String
+  """
+  All values that are not equal to given value.
+  """
+  fileName_not: String
+  """
+  All values that are contained in given list.
+  """
+  fileName_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  fileName_not_in: [String!]
+  """
+  All values containing the given string.
+  """
+  fileName_contains: String
+  """
+  All values not containing the given string.
+  """
+  fileName_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  fileName_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  fileName_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  fileName_ends_with: String
+  """
+  All values not ending with the given string
+  """
+  fileName_not_ends_with: String
+  height: Float
+  """
+  All values that are not equal to given value.
+  """
+  height_not: Float
+  """
+  All values that are contained in given list.
+  """
+  height_in: [Float!]
+  """
+  All values that are not contained in given list.
+  """
+  height_not_in: [Float!]
+  """
+  All values less than the given value.
+  """
+  height_lt: Float
+  """
+  All values less than or equal the given value.
+  """
+  height_lte: Float
+  """
+  All values greater than the given value.
+  """
+  height_gt: Float
+  """
+  All values greater than or equal the given value.
+  """
+  height_gte: Float
+  width: Float
+  """
+  All values that are not equal to given value.
+  """
+  width_not: Float
+  """
+  All values that are contained in given list.
+  """
+  width_in: [Float!]
+  """
+  All values that are not contained in given list.
+  """
+  width_not_in: [Float!]
+  """
+  All values less than the given value.
+  """
+  width_lt: Float
+  """
+  All values less than or equal the given value.
+  """
+  width_lte: Float
+  """
+  All values greater than the given value.
+  """
+  width_gt: Float
+  """
+  All values greater than or equal the given value.
+  """
+  width_gte: Float
+  size: Float
+  """
+  All values that are not equal to given value.
+  """
+  size_not: Float
+  """
+  All values that are contained in given list.
+  """
+  size_in: [Float!]
+  """
+  All values that are not contained in given list.
+  """
+  size_not_in: [Float!]
+  """
+  All values less than the given value.
+  """
+  size_lt: Float
+  """
+  All values less than or equal the given value.
+  """
+  size_lte: Float
+  """
+  All values greater than the given value.
+  """
+  size_gt: Float
+  """
+  All values greater than or equal the given value.
+  """
+  size_gte: Float
+  mimeType: String
+  """
+  All values that are not equal to given value.
+  """
+  mimeType_not: String
+  """
+  All values that are contained in given list.
+  """
+  mimeType_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  mimeType_not_in: [String!]
+  """
+  All values containing the given string.
+  """
+  mimeType_contains: String
+  """
+  All values not containing the given string.
+  """
+  mimeType_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  mimeType_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  mimeType_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  mimeType_ends_with: String
+  """
+  All values not ending with the given string
+  """
+  mimeType_not_ends_with: String
+  characterCover_every: CharacterWhereInput
+  characterCover_some: CharacterWhereInput
+  characterCover_none: CharacterWhereInput
+  characterImages_every: CharacterWhereInput
+  characterImages_some: CharacterWhereInput
+  characterImages_none: CharacterWhereInput
+  comicCover_every: ComicWhereInput
+  comicCover_some: ComicWhereInput
+  comicCover_none: ComicWhereInput
+}
+
+input AssetCreateLocalizationDataInput {
+  createdAt: DateTime
+  updatedAt: DateTime
+  handle: String!
+  fileName: String!
+  height: Float
+  width: Float
+  size: Float
+  mimeType: String
+}
+
+input ComicUpdateManyWithNestedWhereInput {
+  """
+  Document search
+  """
+  where: ComicWhereInput!
+  """
+  Update many input
+  """
+  data: ComicUpdateManyInput!
+}
+
+"""
+An edge in a connection.
+"""
+type ComicEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Comic!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+input KategoriaUpdateManyInlineInput {
+  """
+  Create and connect multiple Kategoria documents
+  """
+  create: [KategoriaCreateInput!]
+  """
+  Connect multiple existing Kategoria documents
+  """
+  connect: [KategoriaConnectInput!]
+  """
+  Override currently-connected documents with multiple existing Kategoria documents
+  """
+  set: [KategoriaWhereUniqueInput!]
+  """
+  Update multiple Kategoria documents
+  """
+  update: [KategoriaUpdateWithNestedWhereUniqueInput!]
+  """
+  Upsert multiple Kategoria documents
+  """
+  upsert: [KategoriaUpsertWithNestedWhereUniqueInput!]
+  """
+  Disconnect multiple Kategoria documents
+  """
+  disconnect: [KategoriaWhereUniqueInput!]
+  """
+  Delete multiple Kategoria documents
+  """
+  delete: [KategoriaWhereUniqueInput!]
+}
+
+input CharacterUpsertWithNestedWhereUniqueInput {
+  """
+  Unique document search
+  """
+  where: CharacterWhereUniqueInput!
+  """
+  Upsert data
+  """
+  data: CharacterUpsertInput!
+}
+
+input CharacterCreateOneInlineInput {
+  """
+  Create and connect one Character document
+  """
+  create: CharacterCreateInput
+  """
+  Connect one existing Character document
+  """
+  connect: CharacterWhereUniqueInput
+}
+
+input KategoriaUpdateWithNestedWhereUniqueInput {
+  """
+  Unique document search
+  """
+  where: KategoriaWhereUniqueInput!
+  """
+  Document to update
+  """
+  data: KategoriaUpdateInput!
+}
+
+enum _MutationKind {
+  create
+  publish
+  unpublish
+  update
+  upsert
+  delete
+  updateMany
+  publishMany
+  unpublishMany
+  deleteMany
+}
+
+enum AssetOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  publishedAt_ASC
+  publishedAt_DESC
+  handle_ASC
+  handle_DESC
+  fileName_ASC
+  fileName_DESC
+  height_ASC
+  height_DESC
+  width_ASC
+  width_DESC
+  size_ASC
+  size_DESC
+  mimeType_ASC
+  mimeType_DESC
+}
+
+input AssetConnectInput {
+  """
+  Document to connect
+  """
+  where: AssetWhereUniqueInput!
+  """
+  Allow to specify document position in list of connected documents, will default to appending at end of list
+  """
+  position: ConnectPositionInput
+}
+
+input AssetUpdateLocalizationsInput {
+  """
+  Localizations to create
+  """
+  create: [AssetCreateLocalizationInput!]
+  """
+  Localizations to update
+  """
+  update: [AssetUpdateLocalizationInput!]
+  upsert: [AssetUpsertLocalizationInput!]
+  """
+  Localizations to delete
+  """
+  delete: [Locale!]
+}
+
+input ComicCreateInput {
+  createdAt: DateTime
+  updatedAt: DateTime
+  title: String!
+  characters: CharacterCreateManyInlineInput
+  cover: AssetCreateOneInlineInput
+}
+
+scalar RGBATransparency
+
+input ComicUpsertInput {
+  """
+  Create document if it didn't exist
+  """
+  create: ComicCreateInput!
+  """
+  Update document if it exists
+  """
+  update: ComicUpdateInput!
+}
+
+type Mutation {
+  """
+  Create one asset
+  """
+  createAsset(data: AssetCreateInput!): Asset @deprecated(reason: "Asset mutations will be overhauled soon")
+  """
+  Update one asset
+  """
+  updateAsset(where: AssetWhereUniqueInput!, data: AssetUpdateInput!): Asset
+  """
+  Delete one asset from _all_ existing stages. Returns deleted document.
+  """
+  deleteAsset("""Document to delete""" where: AssetWhereUniqueInput!): Asset
+  """
+  Upsert one asset
+  """
+  upsertAsset(where: AssetWhereUniqueInput!, upsert: AssetUpsertInput!): Asset
+  """
+  Publish one asset
+  """
+  publishAsset("""Document to publish""" where: AssetWhereUniqueInput!, """Optional localizations to publish""" locales: [Locale!], """Whether to publish the base document""" publishBase: Boolean = """true""", """Whether to include the default locale when publishBase is set""" withDefaultLocale: Boolean = """true""", """Publishing target stage""" to: [Stage!]! = """[PUBLISHED]"""): Asset
+  """
+  Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only.
+  """
+  unpublishAsset("""Document to unpublish""" where: AssetWhereUniqueInput!, """Stages to unpublish document from""" from: [Stage!]! = """[PUBLISHED]""", """Optional locales to unpublish. Unpublishing the default locale will completely remove the document from the selected stages""" locales: [Locale!], """Unpublish complete document including default localization and relations from stages. Can be disabled.""" unpublishBase: Boolean = """true"""): Asset
+  """
+  Update many Asset documents
+  """
+  updateManyAssetsConnection("""Documents to apply update on""" where: AssetManyWhereInput, """Updates to document content""" data: AssetUpdateManyInput!, skip: Int, first: Int, last: Int, before: ID, after: ID): AssetConnection!
+  """
+  Delete many Asset documents, return deleted documents
+  """
+  deleteManyAssetsConnection("""Documents to delete""" where: AssetManyWhereInput, skip: Int, first: Int, last: Int, before: ID, after: ID): AssetConnection!
+  """
+  Publish many Asset documents
+  """
+  publishManyAssetsConnection("""Identifies documents in each stage to be published""" where: AssetManyWhereInput, """Stage to find matching documents in""" from: Stage = """DRAFT""", """Stages to publish documents to""" to: [Stage!]! = """[PUBLISHED]""", skip: Int, first: Int, last: Int, before: ID, after: ID, """Document localizations to publish""" locales: [Locale!], """Whether to publish the base document""" publishBase: Boolean = """true""", """Whether to include the default locale when publishBase is true""" withDefaultLocale: Boolean = """true"""): AssetConnection!
+  """
+  Find many Asset documents that match criteria in specified stage and unpublish from target stages
+  """
+  unpublishManyAssetsConnection("""Identifies documents in draft stage""" where: AssetManyWhereInput, """Stage to find matching documents in""" stage: Stage = """DRAFT""", """Stages to unpublish documents from""" from: [Stage!]! = """[PUBLISHED]""", skip: Int, first: Int, last: Int, before: ID, after: ID, """Locales to unpublish""" locales: [Locale!], """Whether to unpublish the base document and default localization""" unpublishBase: Boolean = """true"""): AssetConnection!
+  """
+  Update many assets
+  """
+  updateManyAssets("""Documents to apply update on""" where: AssetManyWhereInput, """Updates to document content""" data: AssetUpdateManyInput!): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (updateManyAssetsConnection)")
+  """
+  Delete many Asset documents
+  """
+  deleteManyAssets("""Documents to delete""" where: AssetManyWhereInput): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (deleteManyAssetsConnection)")
+  """
+  Publish many Asset documents
+  """
+  publishManyAssets("""Identifies documents in each stage to be published""" where: AssetManyWhereInput, """Stages to publish documents to""" to: [Stage!]! = """[PUBLISHED]""", """Document localizations to publish""" locales: [Locale!], """Whether to publish the base document""" publishBase: Boolean = """true""", """Whether to include the default locale when publishBase is true""" withDefaultLocale: Boolean = """true"""): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (publishManyAssetsConnection)")
+  """
+  Unpublish many Asset documents
+  """
+  unpublishManyAssets("""Identifies documents in each stage""" where: AssetManyWhereInput, """Stages to unpublish documents from""" from: [Stage!]! = """[PUBLISHED]""", """Locales to unpublish""" locales: [Locale!], """Whether to unpublish the base document and default localization""" unpublishBase: Boolean = """true"""): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (unpublishManyAssetsConnection)")
+  """
+  Create one character
+  """
+  createCharacter(data: CharacterCreateInput!): Character
+  """
+  Update one character
+  """
+  updateCharacter(where: CharacterWhereUniqueInput!, data: CharacterUpdateInput!): Character
+  """
+  Delete one character from _all_ existing stages. Returns deleted document.
+  """
+  deleteCharacter("""Document to delete""" where: CharacterWhereUniqueInput!): Character
+  """
+  Upsert one character
+  """
+  upsertCharacter(where: CharacterWhereUniqueInput!, upsert: CharacterUpsertInput!): Character
+  """
+  Publish one character
+  """
+  publishCharacter("""Document to publish""" where: CharacterWhereUniqueInput!, """Publishing target stage""" to: [Stage!]! = """[PUBLISHED]"""): Character
+  """
+  Unpublish one character from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only.
+  """
+  unpublishCharacter("""Document to unpublish""" where: CharacterWhereUniqueInput!, """Stages to unpublish document from""" from: [Stage!]! = """[PUBLISHED]"""): Character
+  """
+  Update many Character documents
+  """
+  updateManyCharactersConnection("""Documents to apply update on""" where: CharacterManyWhereInput, """Updates to document content""" data: CharacterUpdateManyInput!, skip: Int, first: Int, last: Int, before: ID, after: ID): CharacterConnection!
+  """
+  Delete many Character documents, return deleted documents
+  """
+  deleteManyCharactersConnection("""Documents to delete""" where: CharacterManyWhereInput, skip: Int, first: Int, last: Int, before: ID, after: ID): CharacterConnection!
+  """
+  Publish many Character documents
+  """
+  publishManyCharactersConnection("""Identifies documents in each stage to be published""" where: CharacterManyWhereInput, """Stage to find matching documents in""" from: Stage = """DRAFT""", """Stages to publish documents to""" to: [Stage!]! = """[PUBLISHED]""", skip: Int, first: Int, last: Int, before: ID, after: ID): CharacterConnection!
+  """
+  Find many Character documents that match criteria in specified stage and unpublish from target stages
+  """
+  unpublishManyCharactersConnection("""Identifies documents in draft stage""" where: CharacterManyWhereInput, """Stage to find matching documents in""" stage: Stage = """DRAFT""", """Stages to unpublish documents from""" from: [Stage!]! = """[PUBLISHED]""", skip: Int, first: Int, last: Int, before: ID, after: ID): CharacterConnection!
+  """
+  Update many characters
+  """
+  updateManyCharacters("""Documents to apply update on""" where: CharacterManyWhereInput, """Updates to document content""" data: CharacterUpdateManyInput!): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (updateManyCharactersConnection)")
+  """
+  Delete many Character documents
+  """
+  deleteManyCharacters("""Documents to delete""" where: CharacterManyWhereInput): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (deleteManyCharactersConnection)")
+  """
+  Publish many Character documents
+  """
+  publishManyCharacters("""Identifies documents in each stage to be published""" where: CharacterManyWhereInput, """Stages to publish documents to""" to: [Stage!]! = """[PUBLISHED]"""): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (publishManyCharactersConnection)")
+  """
+  Unpublish many Character documents
+  """
+  unpublishManyCharacters("""Identifies documents in each stage""" where: CharacterManyWhereInput, """Stages to unpublish documents from""" from: [Stage!]! = """[PUBLISHED]"""): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (unpublishManyCharactersConnection)")
+  """
+  Create one comic
+  """
+  createComic(data: ComicCreateInput!): Comic
+  """
+  Update one comic
+  """
+  updateComic(where: ComicWhereUniqueInput!, data: ComicUpdateInput!): Comic
+  """
+  Delete one comic from _all_ existing stages. Returns deleted document.
+  """
+  deleteComic("""Document to delete""" where: ComicWhereUniqueInput!): Comic
+  """
+  Upsert one comic
+  """
+  upsertComic(where: ComicWhereUniqueInput!, upsert: ComicUpsertInput!): Comic
+  """
+  Publish one comic
+  """
+  publishComic("""Document to publish""" where: ComicWhereUniqueInput!, """Publishing target stage""" to: [Stage!]! = """[PUBLISHED]"""): Comic
+  """
+  Unpublish one comic from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only.
+  """
+  unpublishComic("""Document to unpublish""" where: ComicWhereUniqueInput!, """Stages to unpublish document from""" from: [Stage!]! = """[PUBLISHED]"""): Comic
+  """
+  Update many Comic documents
+  """
+  updateManyComicsConnection("""Documents to apply update on""" where: ComicManyWhereInput, """Updates to document content""" data: ComicUpdateManyInput!, skip: Int, first: Int, last: Int, before: ID, after: ID): ComicConnection!
+  """
+  Delete many Comic documents, return deleted documents
+  """
+  deleteManyComicsConnection("""Documents to delete""" where: ComicManyWhereInput, skip: Int, first: Int, last: Int, before: ID, after: ID): ComicConnection!
+  """
+  Publish many Comic documents
+  """
+  publishManyComicsConnection("""Identifies documents in each stage to be published""" where: ComicManyWhereInput, """Stage to find matching documents in""" from: Stage = """DRAFT""", """Stages to publish documents to""" to: [Stage!]! = """[PUBLISHED]""", skip: Int, first: Int, last: Int, before: ID, after: ID): ComicConnection!
+  """
+  Find many Comic documents that match criteria in specified stage and unpublish from target stages
+  """
+  unpublishManyComicsConnection("""Identifies documents in draft stage""" where: ComicManyWhereInput, """Stage to find matching documents in""" stage: Stage = """DRAFT""", """Stages to unpublish documents from""" from: [Stage!]! = """[PUBLISHED]""", skip: Int, first: Int, last: Int, before: ID, after: ID): ComicConnection!
+  """
+  Update many comics
+  """
+  updateManyComics("""Documents to apply update on""" where: ComicManyWhereInput, """Updates to document content""" data: ComicUpdateManyInput!): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (updateManyComicsConnection)")
+  """
+  Delete many Comic documents
+  """
+  deleteManyComics("""Documents to delete""" where: ComicManyWhereInput): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (deleteManyComicsConnection)")
+  """
+  Publish many Comic documents
+  """
+  publishManyComics("""Identifies documents in each stage to be published""" where: ComicManyWhereInput, """Stages to publish documents to""" to: [Stage!]! = """[PUBLISHED]"""): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (publishManyComicsConnection)")
+  """
+  Unpublish many Comic documents
+  """
+  unpublishManyComics("""Identifies documents in each stage""" where: ComicManyWhereInput, """Stages to unpublish documents from""" from: [Stage!]! = """[PUBLISHED]"""): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (unpublishManyComicsConnection)")
+  """
+  Create one kategoria
+  """
+  createKategoria(data: KategoriaCreateInput!): Kategoria
+  """
+  Update one kategoria
+  """
+  updateKategoria(where: KategoriaWhereUniqueInput!, data: KategoriaUpdateInput!): Kategoria
+  """
+  Delete one kategoria from _all_ existing stages. Returns deleted document.
+  """
+  deleteKategoria("""Document to delete""" where: KategoriaWhereUniqueInput!): Kategoria
+  """
+  Upsert one kategoria
+  """
+  upsertKategoria(where: KategoriaWhereUniqueInput!, upsert: KategoriaUpsertInput!): Kategoria
+  """
+  Publish one kategoria
+  """
+  publishKategoria("""Document to publish""" where: KategoriaWhereUniqueInput!, """Publishing target stage""" to: [Stage!]! = """[PUBLISHED]"""): Kategoria
+  """
+  Unpublish one kategoria from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only.
+  """
+  unpublishKategoria("""Document to unpublish""" where: KategoriaWhereUniqueInput!, """Stages to unpublish document from""" from: [Stage!]! = """[PUBLISHED]"""): Kategoria
+  """
+  Update many Kategoria documents
+  """
+  updateManyKategoriasConnection("""Documents to apply update on""" where: KategoriaManyWhereInput, """Updates to document content""" data: KategoriaUpdateManyInput!, skip: Int, first: Int, last: Int, before: ID, after: ID): KategoriaConnection!
+  """
+  Delete many Kategoria documents, return deleted documents
+  """
+  deleteManyKategoriasConnection("""Documents to delete""" where: KategoriaManyWhereInput, skip: Int, first: Int, last: Int, before: ID, after: ID): KategoriaConnection!
+  """
+  Publish many Kategoria documents
+  """
+  publishManyKategoriasConnection("""Identifies documents in each stage to be published""" where: KategoriaManyWhereInput, """Stage to find matching documents in""" from: Stage = """DRAFT""", """Stages to publish documents to""" to: [Stage!]! = """[PUBLISHED]""", skip: Int, first: Int, last: Int, before: ID, after: ID): KategoriaConnection!
+  """
+  Find many Kategoria documents that match criteria in specified stage and unpublish from target stages
+  """
+  unpublishManyKategoriasConnection("""Identifies documents in draft stage""" where: KategoriaManyWhereInput, """Stage to find matching documents in""" stage: Stage = """DRAFT""", """Stages to unpublish documents from""" from: [Stage!]! = """[PUBLISHED]""", skip: Int, first: Int, last: Int, before: ID, after: ID): KategoriaConnection!
+  """
+  Update many kategorias
+  """
+  updateManyKategorias("""Documents to apply update on""" where: KategoriaManyWhereInput, """Updates to document content""" data: KategoriaUpdateManyInput!): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (updateManyKategoriasConnection)")
+  """
+  Delete many Kategoria documents
+  """
+  deleteManyKategorias("""Documents to delete""" where: KategoriaManyWhereInput): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (deleteManyKategoriasConnection)")
+  """
+  Publish many Kategoria documents
+  """
+  publishManyKategorias("""Identifies documents in each stage to be published""" where: KategoriaManyWhereInput, """Stages to publish documents to""" to: [Stage!]! = """[PUBLISHED]"""): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (publishManyKategoriasConnection)")
+  """
+  Unpublish many Kategoria documents
+  """
+  unpublishManyKategorias("""Identifies documents in each stage""" where: KategoriaManyWhereInput, """Stages to unpublish documents from""" from: [Stage!]! = """[PUBLISHED]"""): BatchPayload! @deprecated(reason: "Please use the new paginated many mutation (unpublishManyKategoriasConnection)")
+}
+
+type Version {
+  id: ID!
+  stage: Stage!
+  revision: Int!
+  createdAt: DateTime!
+}
+
+input AssetUpsertWithNestedWhereUniqueInput {
+  """
+  Unique document search
+  """
+  where: AssetWhereUniqueInput!
+  """
+  Upsert data
+  """
+  data: AssetUpsertInput!
+}
+
+input CharacterConnectInput {
+  """
+  Document to connect
+  """
+  where: CharacterWhereUniqueInput!
+  """
+  Allow to specify document position in list of connected documents, will default to appending at end of list
+  """
+  position: ConnectPositionInput
+}
+
+input ComicConnectInput {
+  """
+  Document to connect
+  """
+  where: ComicWhereUniqueInput!
+  """
+  Allow to specify document position in list of connected documents, will default to appending at end of list
+  """
+  position: ConnectPositionInput
+}
+
+"""
+Information about pagination in a connection.
+"""
+type PageInfo {
+  """
+  When paginating forwards, are there more items?
+  """
+  hasNextPage: Boolean!
+  """
+  When paginating backwards, are there more items?
+  """
+  hasPreviousPage: Boolean!
+  """
+  When paginating backwards, the cursor to continue.
+  """
+  startCursor: String
+  """
+  When paginating forwards, the cursor to continue.
+  """
+  endCursor: String
+  """
+  Number of items in the current page.
+  """
+  pageSize: Int
+}
+
+"""
+Stage system enumeration
+"""
+enum Stage {
+  """
+  The Draft is the default stage for all your content.
+  """
+  DRAFT
+  """
+  The Published stage is where you can publish your content to.
+  """
+  PUBLISHED
+}
+
+"""
+A connection to a list of items.
+"""
+type KategoriaConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [KategoriaEdge!]!
+  aggregate: Aggregate!
+}
+
+input KategoriaUpdateOneInlineInput {
+  """
+  Create and connect one Kategoria document
+  """
+  create: KategoriaCreateInput
+  """
+  Update single Kategoria document
+  """
+  update: KategoriaUpdateWithNestedWhereUniqueInput
+  """
+  Upsert single Kategoria document
+  """
+  upsert: KategoriaUpsertWithNestedWhereUniqueInput
+  """
+  Connect existing Kategoria document
+  """
+  connect: KategoriaWhereUniqueInput
+  """
+  Disconnect currently connected Kategoria document
+  """
+  disconnect: Boolean
+  """
+  Delete currently connected Kategoria document
+  """
+  delete: Boolean
+}
+
+scalar RGBAHue
+
+enum _RelationInputKind {
+  create
+  update
+}
+
+"""
+System User Kind
+"""
+enum UserKind {
+  MEMBER
+  PAT
+  PUBLIC
+  WEBHOOK
+}
+
+input AssetUpdateOneInlineInput {
+  """
+  Create and connect one Asset document
+  """
+  create: AssetCreateInput
+  """
+  Update single Asset document
+  """
+  update: AssetUpdateWithNestedWhereUniqueInput
+  """
+  Upsert single Asset document
+  """
+  upsert: AssetUpsertWithNestedWhereUniqueInput
+  """
+  Connect existing Asset document
+  """
+  connect: AssetWhereUniqueInput
+  """
+  Disconnect currently connected Asset document
+  """
+  disconnect: Boolean
+  """
+  Delete currently connected Asset document
+  """
+  delete: Boolean
+}
+
+input CharacterUpdateManyWithNestedWhereInput {
+  """
+  Document search
+  """
+  where: CharacterWhereInput!
+  """
+  Update many input
+  """
+  data: CharacterUpdateManyInput!
+}
+
+"""
+Identifies documents
+"""
+input ComicManyWhereInput {
+  """
+  Contains search across all appropriate fields.
+  """
+  _search: String
+  """
+  Logical AND on all given filters.
+  """
+  AND: [ComicWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [ComicWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [ComicWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  publishedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  publishedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  publishedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  publishedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  publishedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  publishedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  publishedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  publishedAt_gte: DateTime
+  title: String
+  """
+  All values that are not equal to given value.
+  """
+  title_not: String
+  """
+  All values that are contained in given list.
+  """
+  title_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  title_not_in: [String!]
+  """
+  All values containing the given string.
+  """
+  title_contains: String
+  """
+  All values not containing the given string.
+  """
+  title_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  title_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  title_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  title_ends_with: String
+  """
+  All values not ending with the given string
+  """
+  title_not_ends_with: String
+  characters_every: CharacterWhereInput
+  characters_some: CharacterWhereInput
+  characters_none: CharacterWhereInput
+  cover: AssetWhereInput
+}
+
+input ComicCreateManyInlineInput {
+  """
+  Create and connect multiple existing Comic documents
+  """
+  create: [ComicCreateInput!]
+  """
+  Connect multiple existing Comic documents
+  """
+  connect: [ComicWhereUniqueInput!]
+}
+
+"""
+References Kategoria record uniquely
+"""
+input KategoriaWhereUniqueInput {
+  id: ID
+}
+
+enum _OrderDirection {
+  asc
+  desc
+}
+
+"""
+A date string, such as 2007-12-03 (YYYY-MM-DD), compliant with ISO 8601 standard for representation of dates using the Gregorian calendar.
+"""
+scalar Date
+
+enum DocumentFileTypes {
+  jpg
+  odp
+  ods
+  odt
+  png
+  svg
+  txt
+  webp
+  docx
+  pdf
+  html
+  doc
+  xlsx
+  xls
+  pptx
+  ppt
+}
+
+input KategoriaCreateManyInlineInput {
+  """
+  Create and connect multiple existing Kategoria documents
+  """
+  create: [KategoriaCreateInput!]
+  """
+  Connect multiple existing Kategoria documents
+  """
+  connect: [KategoriaWhereUniqueInput!]
+}
+
+scalar Hex
+
+"""
+Transformations for Images
+"""
+input ImageTransformationInput {
+  """
+  Resizes the image
+  """
+  resize: ImageResizeInput
+}
+
+input KategoriaUpdateManyInput {
+  kategoria: String
+}
+
+"""
+Asset system model
+"""
+type Asset implements Node {
+  """
+  System stage field
+  """
+  stage: Stage!
+  """
+  System Locale field
+  """
+  locale: Locale!
+  """
+  Get the other localizations for this document
+  """
+  localizations("""Potential locales that should be returned""" locales: [Locale!]! = """[en]""", """Decides if the current locale should be included or not""" includeCurrent: Boolean! = """false"""): [Asset!]!
+  """
+  Get the document in other stages
+  """
+  documentInStages("""Potential stages that should be returned""" stages: [Stage!]! = """[DRAFT,PUBLISHED]""", """Decides if the current stage should be included or not""" includeCurrent: Boolean! = """false""", """Decides if the documents should match the parent documents locale or should use the fallback order defined in the tree""" inheritLocale: Boolean! = """false"""): [Asset!]!
+  """
+  The unique identifier
+  """
+  id: ID!
+  """
+  The time the document was created
+  """
+  createdAt("""Variation of DateTime field to return, allows value from base document, current localization, or combined by returning the newer value of both""" variation: SystemDateTimeFieldVariation! = """COMBINED"""): DateTime!
+  """
+  The time the document was updated
+  """
+  updatedAt("""Variation of DateTime field to return, allows value from base document, current localization, or combined by returning the newer value of both""" variation: SystemDateTimeFieldVariation! = """COMBINED"""): DateTime!
+  """
+  The time the document was published. Null on documents in draft stage.
+  """
+  publishedAt("""Variation of DateTime field to return, allows value from base document, current localization, or combined by returning the newer value of both""" variation: SystemDateTimeFieldVariation! = """COMBINED"""): DateTime
+  """
+  The file handle
+  """
+  handle: String!
+  """
+  The file name
+  """
+  fileName: String!
+  """
+  The height of the file
+  """
+  height: Float
+  """
+  The file width
+  """
+  width: Float
+  """
+  The file size
+  """
+  size: Float
+  """
+  The mime type of the file
+  """
+  mimeType: String
+  characterCover(where: CharacterWhereInput, orderBy: CharacterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, """Allows to optionally override locale filtering behaviour in the query's subtree.
+
+Note that `characterCover` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument will overwrite any existing locale filtering defined in the query's tree for the subtree.""" locales: [Locale!]): [Character!]!
+  characterImages(where: CharacterWhereInput, orderBy: CharacterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, """Allows to optionally override locale filtering behaviour in the query's subtree.
+
+Note that `characterImages` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument will overwrite any existing locale filtering defined in the query's tree for the subtree.""" locales: [Locale!]): [Character!]!
+  comicCover(where: ComicWhereInput, orderBy: ComicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, """Allows to optionally override locale filtering behaviour in the query's subtree.
+
+Note that `comicCover` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument will overwrite any existing locale filtering defined in the query's tree for the subtree.""" locales: [Locale!]): [Comic!]!
+  """
+  List of Asset versions
+  """
+  history(limit: Int! = """10""", skip: Int! = """0""", """This is optional and can be used to fetch the document version history for a specific stage instead of the current one""" stageOverride: Stage): [Version!]!
+  """
+  Get the url for the asset with provided transformations applied.
+  """
+  url(transformation: AssetTransformationInput): String!
+}
+
+input AssetUpdateLocalizationDataInput {
+  handle: String
+  fileName: String
+  height: Float
+  width: Float
+  size: Float
+  mimeType: String
+}
+
+"""
+A connection to a list of items.
+"""
+type CharacterConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [CharacterEdge!]!
+  aggregate: Aggregate!
+}
+
+"""
+References Character record uniquely
+"""
+input CharacterWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+input ComicUpsertWithNestedWhereUniqueInput {
+  """
+  Unique document search
+  """
+  where: ComicWhereUniqueInput!
+  """
+  Upsert data
+  """
+  data: ComicUpsertInput!
+}
+
+"""
+An edge in a connection.
+"""
+type KategoriaEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Kategoria!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+type Query {
+  """
+  Fetches an object given its ID
+  """
+  node("""The ID of an object""" id: ID!, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Node` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): Node
+  """
+  Retrieve multiple assets
+  """
+  assets(where: AssetWhereInput, orderBy: AssetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Asset` will be affected directly by this argument, as well as any other related models with localized fields in the query's subtree.
+The first locale matching the provided list will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): [Asset!]!
+  """
+  Retrieve a single asset
+  """
+  asset(where: AssetWhereUniqueInput!, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Asset` will be affected directly by this argument, as well as any other related models with localized fields in the query's subtree.
+The first locale matching the provided list will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): Asset
+  """
+  Retrieve multiple assets using the Relay connection interface
+  """
+  assetsConnection(where: AssetWhereInput, orderBy: AssetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Asset` will be affected directly by this argument, as well as any other related models with localized fields in the query's subtree.
+The first locale matching the provided list will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): AssetConnection!
+  """
+  Retrieve document version
+  """
+  assetVersion(where: VersionWhereInput!): DocumentVersion
+  """
+  Retrieve multiple characters
+  """
+  characters(where: CharacterWhereInput, orderBy: CharacterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Character` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): [Character!]!
+  """
+  Retrieve a single character
+  """
+  character(where: CharacterWhereUniqueInput!, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Character` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): Character
+  """
+  Retrieve multiple characters using the Relay connection interface
+  """
+  charactersConnection(where: CharacterWhereInput, orderBy: CharacterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Character` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): CharacterConnection!
+  """
+  Retrieve document version
+  """
+  characterVersion(where: VersionWhereInput!): DocumentVersion
+  """
+  Retrieve multiple comics
+  """
+  comics(where: ComicWhereInput, orderBy: ComicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Comic` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): [Comic!]!
+  """
+  Retrieve a single comic
+  """
+  comic(where: ComicWhereUniqueInput!, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Comic` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): Comic
+  """
+  Retrieve multiple comics using the Relay connection interface
+  """
+  comicsConnection(where: ComicWhereInput, orderBy: ComicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Comic` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): ComicConnection!
+  """
+  Retrieve document version
+  """
+  comicVersion(where: VersionWhereInput!): DocumentVersion
+  """
+  Retrieve multiple kategorias
+  """
+  kategorias(where: KategoriaWhereInput, orderBy: KategoriaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Kategoria` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): [Kategoria!]!
+  """
+  Retrieve a single kategoria
+  """
+  kategoria(where: KategoriaWhereUniqueInput!, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Kategoria` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): Kategoria
+  """
+  Retrieve multiple kategorias using the Relay connection interface
+  """
+  kategoriasConnection(where: KategoriaWhereInput, orderBy: KategoriaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int, stage: Stage! = """DRAFT""", """Defines which locales should be returned.
+
+Note that `Kategoria` is a model without localized fields and will not be affected directly by this argument, however the locales will be passed on to any relational fields in the query's subtree for filtering.
+For related models with localized fields in the query's subtree, the first locale matching the provided list of locales will be returned, entries with non matching locales will be filtered out.
+
+This argument may be overwritten by another locales definition in a relational child field, this will effectively use the overwritten argument for the affected query's subtree.""" locales: [Locale!]! = """[en]"""): KategoriaConnection!
+  """
+  Retrieve document version
+  """
+  kategoriaVersion(where: VersionWhereInput!): DocumentVersion
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the date-timeformat outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representationof dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+"""
+Accepts either HEX or RGBA color value. At least one of hex or rgba value should be passed. If both are passed RGBA is used.
+"""
+input ColorInput {
+  hex: Hex
+  rgba: RGBAInput
+}
+
+"""
+Identifies documents
+"""
+input CharacterWhereInput {
+  """
+  Contains search across all appropriate fields.
+  """
+  _search: String
+  """
+  Logical AND on all given filters.
+  """
+  AND: [CharacterWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [CharacterWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [CharacterWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  publishedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  publishedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  publishedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  publishedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  publishedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  publishedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  publishedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  publishedAt_gte: DateTime
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string
+  """
+  name_not_ends_with: String
+  cover: AssetWhereInput
+  description: String
+  """
+  All values that are not equal to given value.
+  """
+  description_not: String
+  """
+  All values that are contained in given list.
+  """
+  description_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  description_not_in: [String!]
+  """
+  All values containing the given string.
+  """
+  description_contains: String
+  """
+  All values not containing the given string.
+  """
+  description_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  description_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  description_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  description_ends_with: String
+  """
+  All values not ending with the given string
+  """
+  description_not_ends_with: String
+  kategoria: KategoriaWhereInput
+  comics_every: ComicWhereInput
+  comics_some: ComicWhereInput
+  comics_none: ComicWhereInput
+  images_every: AssetWhereInput
+  images_some: AssetWhereInput
+  images_none: AssetWhereInput
+}
+
+input CharacterUpdateWithNestedWhereUniqueInput {
+  """
+  Unique document search
+  """
+  where: CharacterWhereUniqueInput!
+  """
+  Document to update
+  """
+  data: CharacterUpdateInput!
+}
+
+"""
+Identifies documents
+"""
+input ComicWhereInput {
+  """
+  Contains search across all appropriate fields.
+  """
+  _search: String
+  """
+  Logical AND on all given filters.
+  """
+  AND: [ComicWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [ComicWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [ComicWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  publishedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  publishedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  publishedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  publishedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  publishedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  publishedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  publishedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  publishedAt_gte: DateTime
+  title: String
+  """
+  All values that are not equal to given value.
+  """
+  title_not: String
+  """
+  All values that are contained in given list.
+  """
+  title_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  title_not_in: [String!]
+  """
+  All values containing the given string.
+  """
+  title_contains: String
+  """
+  All values not containing the given string.
+  """
+  title_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  title_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  title_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  title_ends_with: String
+  """
+  All values not ending with the given string
+  """
+  title_not_ends_with: String
+  characters_every: CharacterWhereInput
+  characters_some: CharacterWhereInput
+  characters_none: CharacterWhereInput
+  cover: AssetWhereInput
+}
+
+input ComicUpdateWithNestedWhereUniqueInput {
+  """
+  Unique document search
+  """
+  where: ComicWhereUniqueInput!
+  """
+  Document to update
+  """
+  data: ComicUpdateInput!
+}
+
+input ComicUpdateOneInlineInput {
+  """
+  Create and connect one Comic document
+  """
+  create: ComicCreateInput
+  """
+  Update single Comic document
+  """
+  update: ComicUpdateWithNestedWhereUniqueInput
+  """
+  Upsert single Comic document
+  """
+  upsert: ComicUpsertWithNestedWhereUniqueInput
+  """
+  Connect existing Comic document
+  """
+  connect: ComicWhereUniqueInput
+  """
+  Disconnect currently connected Comic document
+  """
+  disconnect: Boolean
+  """
+  Delete currently connected Comic document
+  """
+  delete: Boolean
+}
+
+"""
+Custom type representing a rich text value comprising of raw rich text ast, html, markdown and text values
+"""
+type RichText {
+  """
+  Returns AST representation
+  """
+  raw: RichTextAST!
+  """
+  Returns HTMl representation
+  """
+  html: String!
+  """
+  Returns Markdown representation
+  """
+  markdown: String!
+  """
+  Returns plain-text contents of RichText
+  """
+  text: String!
+}
+
+input AssetUpdateLocalizationInput {
+  data: AssetUpdateLocalizationDataInput!
+  locale: Locale!
+}
+
+input AssetUpdateManyLocalizationsInput {
+  """
+  Localizations to update
+  """
+  update: [AssetUpdateManyLocalizationInput!]
+}
+
+input CharacterCreateManyInlineInput {
+  """
+  Create and connect multiple existing Character documents
+  """
+  create: [CharacterCreateInput!]
+  """
+  Connect multiple existing Character documents
+  """
+  connect: [CharacterWhereUniqueInput!]
+}
+
+"""
+Identifies documents
+"""
+input CharacterManyWhereInput {
+  """
+  Contains search across all appropriate fields.
+  """
+  _search: String
+  """
+  Logical AND on all given filters.
+  """
+  AND: [CharacterWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [CharacterWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [CharacterWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  publishedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  publishedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  publishedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  publishedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  publishedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  publishedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  publishedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  publishedAt_gte: DateTime
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string
+  """
+  name_not_ends_with: String
+  cover: AssetWhereInput
+  description: String
+  """
+  All values that are not equal to given value.
+  """
+  description_not: String
+  """
+  All values that are contained in given list.
+  """
+  description_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  description_not_in: [String!]
+  """
+  All values containing the given string.
+  """
+  description_contains: String
+  """
+  All values not containing the given string.
+  """
+  description_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  description_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  description_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  description_ends_with: String
+  """
+  All values not ending with the given string
+  """
+  description_not_ends_with: String
+  kategoria: KategoriaWhereInput
+  comics_every: ComicWhereInput
+  comics_some: ComicWhereInput
+  comics_none: ComicWhereInput
+  images_every: AssetWhereInput
+  images_some: AssetWhereInput
+  images_none: AssetWhereInput
+}
+
+input CharacterUpdateInput {
+  name: String
+  cover: AssetUpdateOneInlineInput
+  description: String
+  kategoria: KategoriaUpdateOneInlineInput
+  comics: ComicUpdateManyInlineInput
+  images: AssetUpdateManyInlineInput
+}
+
+input KategoriaUpsertInput {
+  """
+  Create document if it didn't exist
+  """
+  create: KategoriaCreateInput!
+  """
+  Update document if it exists
+  """
+  update: KategoriaUpdateInput!
+}
+
+"""
+Input for a geolocation point with latitude and longitude
+"""
+input LocationInput {
+  latitude: Float!
+  longitude: Float!
+}
+
+enum _RelationInputCardinality {
+  one
+  many
+}
+
+"""
+An edge in a connection.
+"""
+type AssetEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Asset!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+input AssetUpdateManyWithNestedWhereInput {
+  """
+  Document search
+  """
+  where: AssetWhereInput!
+  """
+  Update many input
+  """
+  data: AssetUpdateManyInput!
+}
+
+input ComicUpdateManyInput {
+  title: String
+}
+
+input KategoriaCreateInput {
+  createdAt: DateTime
+  updatedAt: DateTime
+  kategoria: String!
+  color: ColorInput!
+  characters: CharacterCreateManyInlineInput
+}
+
+"""
+The Long scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+"""
+Locale system enumeration
+"""
+enum Locale {
+  """
+  System locale
+  """
+  en
+}
+
+input CharacterUpdateManyInput {
+  description: String
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

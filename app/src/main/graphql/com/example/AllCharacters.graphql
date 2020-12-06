@@ -1,0 +1,17 @@
+query GetAllToList {
+    characters {
+        id
+        name
+        cover {
+            url
+            width
+            height
+        }
+        kategoria {
+            color {
+                hex
+            }
+            kategoria
+        }
+    }
+}

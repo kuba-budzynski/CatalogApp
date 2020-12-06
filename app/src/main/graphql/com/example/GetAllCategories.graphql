@@ -1,0 +1,8 @@
+query GetAllCategories {
+    kategorias {
+        kategoria
+        color {
+            hex
+        }
+    }
+}

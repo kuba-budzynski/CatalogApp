@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/recyclerListFragment">
+    <fragment
+        android:id="@+id/recyclerListFragment"
+        android:name="com.example.katalog.details.RecyclerListFragment"
+        android:label="RecyclerListFragment" >
+        <action
+            android:id="@+id/action_recyclerListFragment_to_viewPageFragment2"
+            app:destination="@id/viewPageFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewPageFragment2"
+        android:name="com.example.katalog.details.ViewPageFragment"
+        android:label="ViewPageFragment" >
+        <action
+            android:id="@+id/action_viewPageFragment2_to_recyclerListFragment"
+            app:destination="@id/recyclerListFragment" />
+        <argument
+            android:name="details"
+            app:argType="com.example.katalog.viewModels.CharacterDetails"
+            app:nullable="true" />
+        <argument
+            android:name="images"
+            app:argType="com.example.katalog.viewModels.ImageParcel[]" />
+        <argument
+            android:name="connections"
+            app:argType="com.example.katalog.viewModels.CharacterParcel[]" />
+    </fragment>
+</navigation>

@@ -1,0 +1,32 @@
+query GetCharaterDetails($supername: String) {
+    character(where: {name: $supername}) {
+        name
+        kategoria {
+            kategoria
+            color {
+                hex
+            }
+        }
+        images {
+            url
+            width
+            height
+        }
+        description {
+            html
+            text
+            markdown
+        }
+        cover {
+            url
+        }
+    }
+    characters(where: {comics_some: {characters_some: {_search: $supername}}}) {
+        name
+        cover {
+            url
+            width
+            height
+        }
+    }
+}
