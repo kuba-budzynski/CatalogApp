@@ -19,6 +19,11 @@ Listę można sortować po dostępnych kategoriach, wyświetlać tylko ***ulubio
  - Apollo GraphQL client
  - Navigation Fragment
 
+> W przypdaku nipowodzenia w budowaniu aplikacji lub początkowej synchronizacji projektu:<br/>
+> Mi pomogło przebudowanie projektu, generowane są klasy Kotlina reprezentujące zapytania GraphQL<br/>
+> Jeżeli używany jest plugin "Markdown", mogą pojawić się błędy w tej wersji<br/>
+> Aplikacja była robiona w wersji Android Studio 4.1.1, w poprzednich nie generowały się klasy do DataBinding<br/>
+
 <br/>
 <img width="958" alt="Screenshot_3" src="https://user-images.githubusercontent.com/72972091/101269093-1481a080-376b-11eb-8b21-8c970bc527f4.png">
 <img width="398" alt="Screenshot_1" src="https://user-images.githubusercontent.com/72972091/101268943-5d385a00-3769-11eb-8d54-e989800329ed.png">
